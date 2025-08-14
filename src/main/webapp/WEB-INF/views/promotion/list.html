@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Danh sách Khuyến mãi</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="mb-4">Danh sách Khuyến mãi</h1>
+
+    <a th:href="@{/promotions/create}" class="btn btn-success mb-3">Tạo khuyến mãi mới</a>
+    <form th:action="@{/promotions}" method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="keyword" class="form-control"
+                   placeholder="Tìm kiếm theo tên khuyến mãi"
+                   th:value="${keyword}">
+            <button class="btn btn-outline-secondary" type="submit">Tìm</button>
+        </div>
+    </form>
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Tên</th>
+            <th>Giảm giá (%)</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="promotion : ${promotions}">
+            <td th:text="${promotion.name}">Tên khuyến mãi</td>
+            <td th:text="${promotion.discount}">10</td>
+            <td th:text="${promotion.startDate}">2023-01-01</td>
+            <td th:text="${promotion.endDate}">2023-01-31</td>
+            <td>
+                <a th:href="@{'/promotions/edit/' + ${promotion.id}}" class="btn btn-sm btn-primary">Sửa</a>
+                <a th:href="@{'/promotions/delete/' + ${promotion.id}}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('Bạn có chắc muốn xóa khuyến mãi này?');">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
