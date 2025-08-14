@@ -5,8 +5,10 @@ import com.codegym.service.IPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,7 +37,11 @@ public class PromotionController {
     }
 
     @PostMapping("/save")
-    public String save(Promotion promotion) {
+    public String save(@Valid @ModelAttribute("promotion") Promotion promotion,
+                       BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "promotion/create";
+        }
         promotionService.save(promotion);
         return "redirect:/promotions";
     }
@@ -47,7 +53,11 @@ public class PromotionController {
     }
 
     @PostMapping("/update")
-    public String update(Promotion promotion) {
+    public String update(@Valid @ModelAttribute("promotion") Promotion promotion,
+                         BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "promotion/edit";
+        }
         promotionService.save(promotion);
         return "redirect:/promotions";
     }

@@ -1,8 +1,8 @@
 package com.codegym.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -12,18 +12,22 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Tiêu đề không được để trống")
+    @Size(max = 100, message = "Tiêu đề không được vượt quá 100 ký tự")
     private String title;
 
-    @Column(name = "start_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày bắt đầu không được để trống")
     private LocalDate startDate;
 
-    @Column(name = "end_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Ngày kết thúc không được để trống")
     private LocalDate endDate;
 
-    private double discount;
+    @NotNull(message = "Mức giảm giá không được để trống")
+    @PositiveOrZero(message = "Mức giảm giá phải >= 0")
+    private Double discount;
 
+    @NotBlank(message = "Chi tiết không được để trống")
+    @Size(max = 255, message = "Chi tiết không được vượt quá 255 ký tự")
     private String detail;
 
     public Promotion() {
