@@ -1,5 +1,7 @@
 package com.codegym.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,26 +12,30 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
-    private double discount;
+    private String title;
 
     @Column(name = "start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @Column(name = "end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    private boolean deleted = false;
+    private double discount;
 
-    public Promotion() {}
+    private String detail;
 
-    public Promotion(String name, double discount, LocalDate startDate, LocalDate endDate) {
-        this.name = name;
-        this.discount = discount;
+    public Promotion() {
+    }
+
+    public Promotion(Long id, String title, LocalDate startDate, LocalDate endDate, double discount, String detail) {
+        this.id = id;
+        this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.discount = discount;
+        this.detail = detail;
     }
 
     public Long getId() {
@@ -40,20 +46,12 @@ public class Promotion {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getStartDate() {
@@ -72,11 +70,19 @@ public class Promotion {
         this.endDate = endDate;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
